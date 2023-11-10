@@ -1,5 +1,6 @@
 package org.example.pom_files;
 
+import java.math.BigDecimal;
 import org.example.utilities.UtilityLibrary;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -10,52 +11,53 @@ import org.openqa.selenium.support.PageFactory;
 import org.example.utilities.UtilityLibrary.*;
 
 
+import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.equalTo;
 
 
 public class CartPOM {
 
     protected WebDriver driver;
-    protected double sumAsDouble;
-    protected double postDeductionSumAsDouble;
-    protected double shippingFeeAsDouble;
-    protected double finalFeeAsDouble;
+    protected BigDecimal sumAsBigDecimal;
+    protected BigDecimal postDeductionSumAsBigDecimal;
+    protected BigDecimal shippingFeeAsBigDecimal;
+    protected BigDecimal finalFeeAsBigDecimal;
 
     public CartPOM(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public double getSumAsDouble() {
-        return sumAsDouble;
+    public BigDecimal getSumAsBigDecimal() {
+        return sumAsBigDecimal;
     }
 
-    public double getPostDeductionSumAsDouble() {
-        return postDeductionSumAsDouble;
+    public BigDecimal getPostDeductionSumAsBigDecimal() {
+        return postDeductionSumAsBigDecimal;
     }
 
-    public double getShippingFeeAsDouble() {
-        return shippingFeeAsDouble;
+    public BigDecimal getShippingFeeAsBigDecimal() {
+        return shippingFeeAsBigDecimal;
     }
 
-    public double getFinalFeeAsDouble() {
-        return finalFeeAsDouble;
+    public BigDecimal getFinalFeeAsBigDecimal() {
+        return finalFeeAsBigDecimal;
     }
 
-    public void setSumAsDouble(double sumAsDouble) {
-        this.sumAsDouble = sumAsDouble;
+    public void setSumAsBigDecimal(BigDecimal sumAsBigDecimal) {
+        this.sumAsBigDecimal = sumAsBigDecimal;
     }
 
-    public void setPostDeductionSumAsDouble(double postDeductionSumAsDouble) {
-        this.postDeductionSumAsDouble = postDeductionSumAsDouble;
+    public void setPostDeductionSumAsBigDecimal(BigDecimal postDeductionSumAsBigDecimal) {
+        this.postDeductionSumAsBigDecimal = postDeductionSumAsBigDecimal;
     }
 
-    public void setShippingFeeAsDouble(double shippingFeeAsDouble) {
-        this.shippingFeeAsDouble = shippingFeeAsDouble;
+    public void setShippingFeeAsBigDecimal(BigDecimal shippingFeeAsBigDecimal) {
+        this.shippingFeeAsBigDecimal = shippingFeeAsBigDecimal;
     }
 
-    public void setFinalFeeAsDouble(double finalFeeAsDouble) {
-        this.finalFeeAsDouble = finalFeeAsDouble;
+    public void setFinalFeeAsBigDecimal(BigDecimal finalFeeAsBigDecimal) {
+        this.finalFeeAsBigDecimal = finalFeeAsBigDecimal;
     }
 
     @FindBy(name = "coupon_code")
@@ -82,16 +84,16 @@ public class CartPOM {
     public void findSubTotal() {
         String rawValue = checkSubtotal.getText();
         rawValue = rawValue.replaceAll("[^0-9.]", "");
-        double valueAsDouble = Double.parseDouble(rawValue);
-        setSumAsDouble(valueAsDouble);
+        BigDecimal valueAsBigDecimal = new BigDecimal(rawValue);
+        setSumAsBigDecimal(valueAsBigDecimal);
     }
 
     public void couponAppliedAsExpected() {
         UtilityLibrary.waitForElementToBeVisible(driver, checkDeduction, 3);
         String rawValue = checkDeduction.getText();
         rawValue = rawValue.replaceAll("[^0-9.]", "");
-        double valueAsDouble = Double.parseDouble(rawValue);
-        MatcherAssert.assertThat(postDeductionSumAsDouble, equalTo(valueAsDouble));
+        BigDecimal valueAsBigDecimal = new BigDecimal(rawValue);
+        MatcherAssert.assertThat(postDeductionSumAsBigDecimal.compareTo(valueAsBigDecimal), Matchers.equalTo(0));
     }
 
     public void accessCouponCodeField(String coupon) {
@@ -105,27 +107,29 @@ public class CartPOM {
         applyCoupon.click();
     }
 
-    public void deductionTotal(double sumAsDoubleParameterOne, int deductionPercentageParameterTwo) {
-        double result = (sumAsDoubleParameterOne / 100) * deductionPercentageParameterTwo;
-        setPostDeductionSumAsDouble(result);
+    public void deductionTotal(BigDecimal sumAsBigDecimalParameterOne, int deductionPercentageParameterTwo) {
+        BigDecimal percentage = new BigDecimal(deductionPercentageParameterTwo).divide(new BigDecimal("100"));
+        BigDecimal result = sumAsBigDecimalParameterOne.multiply(percentage);
+        setPostDeductionSumAsBigDecimal(result);
     }
 
     public void applyShippingFee() {
         UtilityLibrary.waitForElementToBeVisible(driver, checkShippingFee, 3);
         String rawValue = checkShippingFee.getText();
         rawValue = rawValue.replaceAll("[^0-9.]", "");
-        double valueAsDouble = Double.parseDouble(rawValue);
-        setShippingFeeAsDouble(valueAsDouble);
+        BigDecimal valueAsBigDecimal = new BigDecimal(rawValue);
+        setShippingFeeAsBigDecimal(valueAsBigDecimal);
     }
 
-    public void finalSum(double initialSum, double deductedSum, double shippingFee) {
-        double result = (initialSum - deductedSum) + shippingFeeAsDouble;
-        setFinalFeeAsDouble(result);
+    public void finalSum(BigDecimal initialSum, BigDecimal deductedSum, BigDecimal shippingFee) {
+        // Calculate the final sum using BigDecimal arithmetic
+        BigDecimal result = initialSum.subtract(deductedSum).add(shippingFee);
+        setFinalFeeAsBigDecimal(result);
         UtilityLibrary.waitForElementToBeVisible(driver, checkFinalFee, 3);
         String rawValue = checkFinalFee.getText();
         rawValue = rawValue.replaceAll("[^0-9.]", "");
-        double valueAsDouble = Double.parseDouble(rawValue);
-        MatcherAssert.assertThat(finalFeeAsDouble, Matchers.closeTo(valueAsDouble, 0.1));
+        BigDecimal valueAsBigDecimal = new BigDecimal(rawValue);
+        MatcherAssert.assertThat(finalFeeAsBigDecimal.compareTo(valueAsBigDecimal), Matchers.equalTo(0));
     }
 
     public void goToCheckout() {

@@ -1,22 +1,33 @@
 package pom_tests;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pom_pages.*;
 import utilities.TestBase;
 
 public class ProductSearchUsingPOMTest extends TestBase {
 
+
+    @BeforeEach
+    void setUp() {
+
+    }
+    @AfterEach
+    void tearDown() {
+
+    }
     @Test
     void testCaseOne() {
-        driver.get(baseURL);
-        NavigationPOM navigation = new NavigationPOM(driver);
-        AccountPagePOM account = new AccountPagePOM(driver);
-        CartPOM cartInteractions = new CartPOM(driver);
-        SearchResultsPOM results = new SearchResultsPOM(driver);
-        navigation.acceptCookies();
-        navigation.goToAccount();
-        account.logInToSite("fakelewis@2i.com", "fakepassword@@@@1111");
-        navigation.goToHome();
+//        driver.get(baseURL);
+//        NavigationPOM navigation = new NavigationPOM(driver);
+//        AccountPagePOM account = new AccountPagePOM(driver);
+//        CartPOM cartInteractions = new CartPOM(driver);
+//        SearchResultsPOM results = new SearchResultsPOM(driver);
+//        navigation.acceptCookies();
+//        navigation.goToAccount();
+//        account.logInToSite("fakelewis@2i.com", "fakepassword@@@@1111");
+//        navigation.goToHome();
         navigation.searchFor("cap");
         results.addToCart();
         results.viewCart();

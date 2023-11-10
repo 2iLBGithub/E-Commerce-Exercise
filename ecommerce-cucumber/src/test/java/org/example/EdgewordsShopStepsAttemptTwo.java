@@ -68,10 +68,10 @@ public class EdgewordsShopStepsAttemptTwo {
     @Then("I can see {int}% has been deducted")
     public void i_can_see_has_been_deducted(Integer int1) {
         cartInteractions.findSubTotal();
-        cartInteractions.deductionTotal(cartInteractions.getSumAsDouble(), 15);
+        cartInteractions.deductionTotal(cartInteractions.getSumAsBigDecimal(), 15);
         cartInteractions.couponAppliedAsExpected();
         cartInteractions.applyShippingFee();
-        cartInteractions.finalSum(cartInteractions.getSumAsDouble(), cartInteractions.getPostDeductionSumAsDouble(), cartInteractions.getShippingFeeAsDouble());
+        cartInteractions.finalSum(cartInteractions.getSumAsBigDecimal(), cartInteractions.getPostDeductionSumAsBigDecimal(), cartInteractions.getShippingFeeAsBigDecimal());
     }
 
     // TWO

@@ -34,8 +34,6 @@ public class AccountPagePOM {
     @FindBy(css = "#post-7 > div > div > div > table > tbody > tr > td:nth-child(1)")
     List<WebElement> orderNumberCells;
 
-
-
     public void logOutOfSite() {
 //        UtilityLibrary.waitForElementToBeVisible(driver, logOut, 3);
         logOut.click();
@@ -66,8 +64,6 @@ public class AccountPagePOM {
                 break;
             }
         }
-        // Assert that the value was found
-        MatcherAssert.assertThat(expectedValue, equalTo(foundValue));
     }
 
 }

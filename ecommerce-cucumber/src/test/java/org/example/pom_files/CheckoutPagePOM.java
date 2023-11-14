@@ -43,8 +43,8 @@ public class CheckoutPagePOM {
     @FindBy(id = "place_order")
     WebElement placeOrder;
 
-//    @FindBy(css = "blockUI blockOverlay")
-//    WebElement obstruction;
+    @FindBy(css = ".blockUI.blockOverlay")
+    WebElement obstruction;
 
     public void inputFirstName(String firstName) {
         UtilityLibrary.waitForElementToBeClickable(driver, getFirstName, 3);
@@ -90,13 +90,13 @@ public class CheckoutPagePOM {
     }
 
     public void inputPaymentMethodCheque() {
-        UtilityLibrary.waitForElementToBeInvisible(driver, By.cssSelector(".blockUI.blockOverlay"), 10);
+        UtilityLibrary.waitForElementToBeInvisible(driver, obstruction, 10);
         UtilityLibrary.waitForElementToBeClickable(driver, paymentMethodCheque, 3);
         paymentMethodCheque.click();
     }
 
     public void finaliseOrder() {
-        UtilityLibrary.waitForElementToBeInvisible(driver, By.cssSelector(".blockUI.blockOverlay"), 10);
+        UtilityLibrary.waitForElementToBeInvisible(driver, obstruction, 10);
         UtilityLibrary.waitForElementToBeVisible(driver, placeOrder, 3);
         UtilityLibrary.waitForElementToBeClickable(driver, placeOrder, 3);
         placeOrder.click();

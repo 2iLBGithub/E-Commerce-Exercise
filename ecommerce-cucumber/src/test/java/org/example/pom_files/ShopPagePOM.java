@@ -1,5 +1,6 @@
 package org.example.pom_files;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,6 +24,13 @@ public class ShopPagePOM {
     public void addItemToCart() {
         UtilityLibrary.waitForElementToBeClickable(driver, addBeanieHatToCart, 3);
         addBeanieHatToCart.click();
+    }
+
+    public void addItemToCartParameterised(String itemName) {
+        String cssSelector = "[aria-label*='" + itemName + "']";
+        WebElement addItemToCartButton = driver.findElement(By.cssSelector(cssSelector));
+        UtilityLibrary.waitForElementToBeClickable(driver, addItemToCartButton, 3);
+        addItemToCartButton.click();
     }
 
     public void viewCartInIcon() {

@@ -15,9 +15,6 @@ public class NavigationPOM {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(linkText = "Dismiss")
-    WebElement dismissLink;
-
     @FindBy(css = "#menu-item-42 > a:nth-child(1)")
     WebElement selectHomePage;
 
@@ -29,10 +26,6 @@ public class NavigationPOM {
 
     @FindBy(id = "menu-item-43")
     WebElement shopPage;
-
-    public void acceptCookies() {
-        dismissLink.click();
-    }
 
     public void searchFor(String product) {
         searchBox.sendKeys(product + Keys.ENTER);

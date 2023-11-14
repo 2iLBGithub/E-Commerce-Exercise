@@ -2,18 +2,10 @@ package org.example.pom_files;
 
 import java.math.BigDecimal;
 import org.example.utilities.UtilityLibrary;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.example.utilities.UtilityLibrary.*;
-
-
-import static org.hamcrest.Matchers.comparesEqualTo;
-import static org.hamcrest.Matchers.equalTo;
-
 
 public class CartPOM {
 
@@ -88,12 +80,11 @@ public class CartPOM {
         setSumAsBigDecimal(valueAsBigDecimal);
     }
 
-    public void couponAppliedAsExpected() {
+    public BigDecimal getCouponDeduction() {
         UtilityLibrary.waitForElementToBeVisible(driver, checkDeduction, 3);
         String rawValue = checkDeduction.getText();
         rawValue = rawValue.replaceAll("[^0-9.]", "");
-        BigDecimal valueAsBigDecimal = new BigDecimal(rawValue);
-        MatcherAssert.assertThat(postDeductionSumAsBigDecimal.compareTo(valueAsBigDecimal), Matchers.equalTo(0));
+        return new BigDecimal(rawValue);
     }
 
     public void accessCouponCodeField(String coupon) {
@@ -107,12 +98,6 @@ public class CartPOM {
         applyCoupon.click();
     }
 
-    public void deductionTotal(BigDecimal sumAsBigDecimalParameterOne, int deductionPercentageParameterTwo) {
-        BigDecimal percentage = new BigDecimal(deductionPercentageParameterTwo).divide(new BigDecimal("100"));
-        BigDecimal result = sumAsBigDecimalParameterOne.multiply(percentage);
-        setPostDeductionSumAsBigDecimal(result);
-    }
-
     public void applyShippingFee() {
         UtilityLibrary.waitForElementToBeVisible(driver, checkShippingFee, 3);
         String rawValue = checkShippingFee.getText();
@@ -121,15 +106,11 @@ public class CartPOM {
         setShippingFeeAsBigDecimal(valueAsBigDecimal);
     }
 
-    public void finalSum(BigDecimal initialSum, BigDecimal deductedSum, BigDecimal shippingFee) {
-        // Calculate the final sum using BigDecimal arithmetic
-        BigDecimal result = initialSum.subtract(deductedSum).add(shippingFee);
-        setFinalFeeAsBigDecimal(result);
+    public BigDecimal getFinalSum() {
         UtilityLibrary.waitForElementToBeVisible(driver, checkFinalFee, 3);
         String rawValue = checkFinalFee.getText();
         rawValue = rawValue.replaceAll("[^0-9.]", "");
-        BigDecimal valueAsBigDecimal = new BigDecimal(rawValue);
-        MatcherAssert.assertThat(finalFeeAsBigDecimal.compareTo(valueAsBigDecimal), Matchers.equalTo(0));
+        return new BigDecimal(rawValue);
     }
 
     public void goToCheckout() {

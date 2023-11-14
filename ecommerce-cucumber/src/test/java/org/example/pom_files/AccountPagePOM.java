@@ -33,6 +33,8 @@ public class AccountPagePOM {
     WebElement goToOrders;
     @FindBy(css = "#post-7 > div > div > div > table > tbody > tr > td:nth-child(1)")
     List<WebElement> orderNumberCells;
+    @FindBy(css = "td[data-title='Order'] a")
+    WebElement orderDataCell;
 
     public void logOutOfSite() {
 //        UtilityLibrary.waitForElementToBeVisible(driver, logOut, 3);
@@ -53,17 +55,23 @@ public class AccountPagePOM {
         goToOrders.click();
     }
 
-    public void checkOrderNumber(String expectedValue) {
-        String foundValue = null;
-        System.out.println("This is " + expectedValue);
+//    public void checkOrderNumber(String expectedValue) {
+//        String foundValue = null;
+//        System.out.println("This is " + expectedValue);
+//
+//        for (WebElement cell : orderNumberCells) {
+//            String cellText = cell.getText().replace("#", "");
+//            if (cellText.equals(expectedValue)) {
+//                foundValue = cellText;
+//                break;
+//            }
+//        }
+//    }
 
-        for (WebElement cell : orderNumberCells) {
-            String cellText = cell.getText().replace("#", "");
-            if (cellText.equals(expectedValue)) {
-                foundValue = cellText;
-                break;
-            }
-        }
+    public String checkOrderNumber() {
+        String foundValue = orderDataCell.getText();
+        String sanitisedValue = foundValue.replace("#", "");
+        return sanitisedValue;
     }
 
 }

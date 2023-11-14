@@ -27,10 +27,13 @@ public class OrderConfirmationPagePOM {
     @FindBy(css = "#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong")
     WebElement orderNumber;
 
-    public void ascribeOrderNumber() {
-//
-        UtilityLibrary.waitForElementToBeVisible(driver, orderNumber, 3);
-        setSavedOrderNumber(orderNumber.getText());
+//    public void ascribeOrderNumber() {
+//        UtilityLibrary.waitForElementToBeVisible(driver, orderNumber, 3);
+//        setSavedOrderNumber(orderNumber.getText());
+//    }
 
+    public String getOrderNumber() {
+        UtilityLibrary.waitForElementToBeVisible(driver, orderNumber, 3);
+        return orderNumber.getText();
     }
 }

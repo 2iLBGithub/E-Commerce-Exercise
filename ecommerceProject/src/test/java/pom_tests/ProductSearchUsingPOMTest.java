@@ -1,7 +1,5 @@
 package pom_tests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pom_pages.*;
 import utilities.TestBase;

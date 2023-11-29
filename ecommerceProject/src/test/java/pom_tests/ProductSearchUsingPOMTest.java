@@ -8,26 +8,14 @@ import utilities.TestBase;
 
 public class ProductSearchUsingPOMTest extends TestBase {
 
-
-    @BeforeEach
-    void setUp() {
-
-    }
-    @AfterEach
-    void tearDown() {
-
-    }
     @Test
     void testCaseOne() {
-//        driver.get(baseURL);
-//        NavigationPOM navigation = new NavigationPOM(driver);
-//        AccountPagePOM account = new AccountPagePOM(driver);
-//        CartPOM cartInteractions = new CartPOM(driver);
-//        SearchResultsPOM results = new SearchResultsPOM(driver);
-//        navigation.acceptCookies();
-//        navigation.goToAccount();
-//        account.logInToSite("fakelewis@2i.com", "fakepassword@@@@1111");
-//        navigation.goToHome();
+        driver.get(baseURL);
+        NavigationPOM navigation = new NavigationPOM(driver);
+        AccountPagePOM account = new AccountPagePOM(driver);
+        CartPOM cartInteractions = new CartPOM(driver);
+        SearchResultsPOM results = new SearchResultsPOM(driver);
+        navigation.goToHome();
         navigation.searchFor("cap");
         results.addToCart();
         results.viewCart();
@@ -43,7 +31,7 @@ public class ProductSearchUsingPOMTest extends TestBase {
     }
 
     @Test
-    void testCaseTwo() throws InterruptedException{
+    void testCaseTwo() {
         driver.get(baseURL);
         NavigationPOM navigation = new NavigationPOM(driver);
         AccountPagePOM account = new AccountPagePOM(driver);
@@ -51,9 +39,6 @@ public class ProductSearchUsingPOMTest extends TestBase {
         CartPOM cartInteractions = new CartPOM(driver);
         CheckoutPagePOM checkout = new CheckoutPagePOM(driver);
         OrderConfirmationPagePOM orderConfirmation = new OrderConfirmationPagePOM(driver);
-        navigation.goToAccount();
-        navigation.acceptCookies();
-        account.logInToSite("fakelewis@2i.com", "fakepassword@@@@1111");
         navigation.goToShop();
         shop.addItemToCart();
         shop.viewCartInIcon();

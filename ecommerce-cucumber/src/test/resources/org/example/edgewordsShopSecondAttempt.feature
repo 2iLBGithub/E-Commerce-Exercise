@@ -1,7 +1,5 @@
 Feature: E-commerce Order Placement
 
-  # Consider making this a scenario outline, and consider changing the item in when to something else
-
   Scenario Outline: Buy something and apply a coupon
     Given I can access the home page
     When I add an "<Item>" to my cart
